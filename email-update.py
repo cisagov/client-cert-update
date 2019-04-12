@@ -50,11 +50,9 @@ def query(db):
     certificates.
 
     """
-    client_cert_hosts = db.https_scan.find({
-        'latest': True,
-        'live': True,
-        'https_client_auth_required': True
-    })
+    client_cert_hosts = db.https_scan.find(
+        {"latest": True, "live": True, "https_client_auth_required": True}
+    )
 
     return list(client_cert_hosts)
 
@@ -78,7 +76,7 @@ def main():
         return 1
 
     # Handle some command line arguments
-    db_creds_file = args['--db-creds-file']
+    db_creds_file = args["--db-creds-file"]
     from_email = args["--from"]
     to_email = args["--to"]
     cc_email = args["--cc"]
@@ -91,24 +89,32 @@ def main():
     try:
         db = db_from_config(db_creds_file)
     except OSError:
-        logging.critical(f'Database configuration file {db_creds_file} does not exist',
-                         exc_info=True)
+        logging.critical(
+            f"Database configuration file {db_creds_file} does not exist", exc_info=True
+        )
         return 1
     except yaml.YAMLError:
-        logging.critical(f'Database configuration file {db_creds_file} does not contain valid YAML',
-                         exc_info=True)
+        logging.critical(
+            f"Database configuration file {db_creds_file} does not contain valid YAML",
+            exc_info=True,
+        )
         return 1
     except KeyError:
-        logging.critical(f'Database configuration file {db_creds_file} does not contain the expected keys',
-                         exc_info=True)
+        logging.critical(
+            f"Database configuration file {db_creds_file} does not contain the expected keys",
+            exc_info=True,
+        )
         return 1
     except pymongo.errors.ConnectionError:
-        logging.critical(f'Unable to connect to the database server in {db_creds_file}',
-                         exc_info=True)
+        logging.critical(
+            f"Unable to connect to the database server in {db_creds_file}",
+            exc_info=True,
+        )
         return 1
     except pymongo.errors.InvalidName:
-        logging.critical(f'The database in {db_creds_file} does not exist',
-                         exc_info=True)
+        logging.critical(
+            f"The database in {db_creds_file} does not exist", exc_info=True
+        )
         return 1
 
     # Perform the query to retrieve all hosts that require

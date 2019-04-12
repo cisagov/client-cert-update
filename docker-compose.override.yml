@@ -6,9 +6,11 @@ services:
       - "--db-creds-file=/run/secrets/db_creds.yml"
       - "--from=reports@cyber.dhs.gov"
       - "--to=jeremy.frasier@trio.dhs.gov"
-#      - "--cc=ncats-dev@beta.dhs.gov"
+      # - "--cc=ncats-dev@beta.dhs.gov"
       - "--reply=ncats-dev@beta.dhs.gov"
-      - "--subject=\"Latest list of web hosts that require authentication via client certificates\""
+      - >
+        "--subject=\"Latest list of web hosts that require authentication
+        via client certificates\""
       - "--text=body.txt"
       - "--html=body.html"
       - "--log-level=info"

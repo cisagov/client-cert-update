@@ -15,7 +15,7 @@ Before contributing, we encourage you to read our CONTRIBUTING policy
 
 If you want to report a bug or request a new feature, the most direct
 method is to [create an
-issue](https://github.com/cisagov/code-gov-update/issues) in this
+issue](https://github.com/cisagov/client-cert-update/issues) in this
 repository.  We recommend that you first search through existing
 issues (both open and closed) to check if your particular issue has
 already been reported.  If it has then you might want to add a comment
@@ -25,8 +25,8 @@ one.
 ## Pull requests ##
 
 If you choose to [submit a pull
-request](https://github.com/cisagov/code-gov-update/pulls), you will
-notice that our continuous integration (CI) system runs a fairly
+request](https://github.com/cisagov/client-cert-update/pulls), you
+will notice that our continuous integration (CI) system runs a fairly
 extensive set of linters and syntax checkers.  Your pull request may
 fail these checks, and that's OK.  If you want you can stop there and
 wait for us to make the necessary corrections to ensure your code

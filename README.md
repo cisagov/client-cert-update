@@ -1,22 +1,12 @@
-# code-gov-update #
+# client-cert-update #
 
-[![Build Status](https://travis-ci.com/cisagov/code-gov-update.svg?branch=develop)](https://travis-ci.com/cisagov/code-gov-update)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/code-gov-update.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/code-gov-update/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/code-gov-update.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/code-gov-update/context:python)
+[![Build Status](https://travis-ci.com/cisagov/client-cert-update.svg?branch=develop)](https://travis-ci.com/cisagov/client-cert-update)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/client-cert-update.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/client-cert-update/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/client-cert-update.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/client-cert-update/context:python)
 
-This project contains code for updating the DHS
-[code.gov](https://code.gov) inventory published
-[here](https://www.dhs.gov/code.json).
-
-## How it works ##
-
-The [LLNL/scraper](https://github.com/LLNL/scraper) project is used to
-scrape a handful of GitHub organizations that belong to DHS and
-produce an updated JSON file per [the code.gov
-specification](https://code.gov/about/compliance/inventory-code).  If
-that file differs from the previously-generated one, it is emailed to
-the appropriate address so that it can be used to update the content
-hosted [here](https://www.dhs.gov/code.json).
+This project contains code for sending FNR BOD an updated list of the
+live websites in .gov that require authentication via client
+certificates.
 
 ## Contributing ##
 

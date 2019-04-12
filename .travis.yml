@@ -21,10 +21,10 @@ otXEYI9K/PhG2PYDE/09/TW8YJT6j4ahc2SmaJVme8u31iJVdsByBVXAs61aROmCCx+k="
 
 install:
   - pip install --upgrade -r requirements-test.txt
-  - travis_scripts/build_docker_image.sh
 
 script:
   - pre-commit run --all-files
+  - travis_scripts/build_docker_image.sh
 
 deploy:
   - provider: script

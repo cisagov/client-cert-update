@@ -6,7 +6,7 @@ services: docker
 
 env:
   global:
-    - IMAGE_NAME=dhsncats/code-gov-update
+    - IMAGE_NAME=dhsncats/client-cert-update
     - DOCKER_USER=jsf9k
     - secure: "j/i4XioToNCXLiQrEDchXdEJtCiFf6Yf50Kj9qLeFokGNrVdAR2r+G5\
 fGb8lx/NgpI4z2wEojT4yH5k7s4sKAqnrm5pDOHsBC5Lgi+PnVLIyiQt2b2NbSY08eBHd7\

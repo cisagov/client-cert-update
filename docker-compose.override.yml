@@ -3,12 +3,12 @@ version: '3.2'
 services:
   update:
     command:
-      - "--from=code@cyber.dhs.gov"
-      - "--to=webpublishing@hq.dhs.gov"
-      - "--cc=ncats-dev@beta.dhs.gov"
+      - "--db-creds-file=/run/secrets/db_creds.yml"
+      - "--from=reports@cyber.dhs.gov"
+      - "--to=jeremy.frasier@trio.dhs.gov"
+#      - "--cc=ncats-dev@beta.dhs.gov"
       - "--reply=ncats-dev@beta.dhs.gov"
-      - "--json=code.json"
-      - "--subject=\"Latest code.gov JSON file\""
+      - "--subject=\"Latest list of web hosts that require authentication via client certificates\""
       - "--text=body.txt"
       - "--html=body.html"
       - "--log-level=info"

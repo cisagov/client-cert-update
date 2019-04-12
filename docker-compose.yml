@@ -1,17 +1,17 @@
 version: '3.2'
 
 secrets:
-  scraper_config:
-    file: secrets/scraper.json
+  db_creds:
+    file: secrets/db_creds.json
   aws_config:
     file: secrets/aws_config
 
 services:
   update:
-    image: 'dhsncats/code-gov-update:0.0.2'
+    image: 'dhsncats/client-cert-update:0.0.1'
     secrets:
-      - source: scraper_config
-        target: scraper_config.json
+      - source: db_creds
+        target: db_creds.json
       - source: aws_config
         target: aws_config
     environment:

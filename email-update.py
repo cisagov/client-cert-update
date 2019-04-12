@@ -1,33 +1,62 @@
 #!/usr/bin/env python
 
-"""email-update.py is a tool for sending an updated code.gov JSON file
+"""email-update.py is a tool for sending an updated list of HTTP sites
+requiring authentication via client certificates
 
 Usage:
-  email-update.py --from=EMAIL --to=EMAIL [--cc=EMAIL] [--reply=EMAIL]  --json=FILENAME --subject=SUBJECT --text=FILENAME --html=FILENAME [--log-level=LEVEL]
+  email-update.py --from=EMAIL --to=EMAIL [--cc=EMAIL] [--reply=EMAIL] --subject=SUBJECT --text=FILENAME --html=FILENAME [--log-level=LEVEL]
   email-update.py (-h | --help)
 
 Options:
   -h --help         Show this message.
-  --from=EMAIL      The email address from which the updated JSON file should be sent.
-  --to=EMAIL        A comma-separated list email address where the updated JSON file should be sent.
-  --cc=EMAIL        A comma-separated list email address where the updated JSON file should also be sent.
-  --reply=EMAIL     The email address to use as the reply-to address when sending the updated JSON file.
-  --json=FILENAME   The name of the updated JSON file.
-  --subject=SUBJECT The subject to use when sending the updated JSON file.
-  --text=FILENAME   The name of a file containing the plain text that is to be used as the body of the email when sending the updated JSON file.
-  --html=FILENAME   The name of a file containing the HTML text that is to be used as the body of the email when sending the updated JSON file.
-  --log-level=LEVEL If specified, then the log level will be set to the specified value.  Valid values are "debug", "info", "warn", and "error".
+  --db-creds-file=FILENAME  A YAML file containing the BOD 18-01 scan results database credentials.
+  --from=EMAIL      The email address from which the updated information should be sent.
+  --to=EMAIL        A comma-separated list email address where the updated information should be sent.
+  --cc=EMAIL        A comma-separated list email address where the updated information should also be sent.
+  --reply=EMAIL     The email address to use as the reply-to address when sending the updated information.
+  --subject=SUBJECT The subject to use when sending the updated information.
+  --text=FILENAME   The name of a file containing the plain text that is to be used as the body of the email when sending the updated information.
+  --html=FILENAME   The name of a file containing the HTML text that is to be used as the body of the email when sending the updated information.
+  --log-level=LEVEL If specified, then the log level will be set to the specified value.  Valid values are "debug", "info", "warning", and "error".
 
 """
 
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import json
 import logging
-import os
 
 import boto3
 import docopt
+from mongo_db_from_config import db_from_config
+import pymongo.errors
+import yaml
+
+
+def query(db):
+    """Query the BOD 18-01 scan results database for hosts that require
+    authentication via client certificates
+
+    Parameters
+    ----------
+    db : mongokit.database.Database
+         The Mongo database connection
+
+    Returns
+    -------
+    list: A list of dicts, each containing the pshtt scan results for
+    a single host that requires authentication via client
+    certificates.
+
+    """
+    client_cert_hosts = db.https_scan.find({
+        'latest': True,
+        'live': True,
+        'https_client_auth_required': True
+    })
+
+    return list(client_cert_hosts)
 
 
 def main():
@@ -44,19 +73,47 @@ def main():
         )
     except ValueError:
         logging.critical(
-            f'"{log_level}" is not a valid logging level.  Possible values are debug, info, warn, and error.'
+            f'"{log_level}" is not a valid logging level.  Possible values are debug, info, warning, and error.'
         )
         return 1
 
     # Handle some command line arguments
+    db_creds_file = args['--db-creds-file']
     from_email = args["--from"]
     to_email = args["--to"]
     cc_email = args["--cc"]
     reply_email = args["--reply"]
-    json_filename = args["--json"]
     subject = args["--subject"]
     text_filename = args["--text"]
     html_filename = args["--html"]
+
+    # Connect to the BOD 18-01 scan results database
+    try:
+        db = db_from_config(db_creds_file)
+    except OSError:
+        logging.critical(f'Database configuration file {db_creds_file} does not exist',
+                         exc_info=True)
+        return 1
+    except yaml.YAMLError:
+        logging.critical(f'Database configuration file {db_creds_file} does not contain valid YAML',
+                         exc_info=True)
+        return 1
+    except KeyError:
+        logging.critical(f'Database configuration file {db_creds_file} does not contain the expected keys',
+                         exc_info=True)
+        return 1
+    except pymongo.errors.ConnectionError:
+        logging.critical(f'Unable to connect to the database server in {db_creds_file}',
+                         exc_info=True)
+        return 1
+    except pymongo.errors.InvalidName:
+        logging.critical(f'The database in {db_creds_file} does not exist',
+                         exc_info=True)
+        return 1
+
+    # Perform the query to retrieve all hosts that require
+    # authentication via client certificates
+    client_cert_hosts = query(db)
 
     # Build up the MIME message to be sent
     msg = MIMEMultipart("mixed")
@@ -89,12 +146,11 @@ def main():
     msg.attach(body)
 
     # Attach JSON file
-    with open(json_filename, "r") as attachment:
-        json_part = MIMEApplication(attachment.read(), "json")
-        # See https://en.wikipedia.org/wiki/MIME#Content-Disposition
-        _, filename = os.path.split(json_filename)
-        json_part.add_header("Content-Disposition", "attachment", filename=filename)
-        logging.debug(f"Message will include file {json_filename} as attachment")
+    json_part = MIMEApplication(json.dumps(client_cert_hosts), "json")
+    json_filename = "hosts_that_require_auth_via_client_certs.json"
+    # See https://en.wikipedia.org/wiki/MIME#Content-Disposition
+    json_part.add_header("Content-Disposition", "attachment", filename=json_filename)
+    logging.debug(f"Message will include file {json_filename} as attachment")
     msg.attach(json_part)
 
     # Send the email

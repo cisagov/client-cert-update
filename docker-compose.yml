@@ -2,7 +2,7 @@ version: '3.2'
 
 secrets:
   scan_read_creds:
-    file: secrets/scan_read_creds.json
+    file: secrets/scan_read_creds.yml
   aws_config:
     file: secrets/aws_config
 
@@ -11,7 +11,7 @@ services:
     image: 'dhsncats/client-cert-update:0.0.1'
     secrets:
       - source: scan_read_creds
-        target: scan_read_creds.json
+        target: scan_read_creds.yml
       - source: aws_config
         target: aws_config
     environment:

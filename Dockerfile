@@ -31,4 +31,4 @@ RUN chown -R ${USER}:${USER} $USER_HOME
 ###
 # USER $USER
 WORKDIR $USER_HOME
-ENTRYPOINT ["./update.sh"]
+ENTRYPOINT ["./email-update.py"]

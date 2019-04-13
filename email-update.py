@@ -24,6 +24,7 @@ Options:
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import gzip
 import json
 import logging
 
@@ -153,8 +154,14 @@ def main():
     msg.attach(body)
 
     # Attach JSON file
-    json_part = MIMEApplication(json.dumps(client_cert_hosts), "json")
-    json_filename = "hosts_that_require_auth_via_client_certs.json"
+    json_part = MIMEApplication(
+        gzip.compress(
+            json.dumps(client_cert_hosts, sort_keys=True, indent=4).encode("utf-8")
+        ),
+        "json",
+    )
+    json_part.add_header("Content-Encoding", "gzip")
+    json_filename = "hosts_that_require_auth_via_client_certs.json.gz"
     # See https://en.wikipedia.org/wiki/MIME#Content-Disposition
     json_part.add_header("Content-Disposition", "attachment", filename=json_filename)
     logging.debug(f"Message will include file {json_filename} as attachment")

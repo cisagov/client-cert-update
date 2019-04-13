@@ -51,7 +51,8 @@ def query(db):
 
     """
     client_cert_hosts = db.https_scan.find(
-        {"latest": True, "live": True, "https_client_auth_required": True}
+        {"latest": True, "live": True, "https_client_auth_required": True},
+        {"_id": False, "scan_date": False, "latest": False},
     )
 
     return list(client_cert_hosts)

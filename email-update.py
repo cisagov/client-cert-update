@@ -4,7 +4,7 @@
 requiring authentication via client certificates
 
 Usage:
-  email-update.py --from=EMAIL --to=EMAIL [--cc=EMAIL] [--reply=EMAIL] --subject=SUBJECT --text=FILENAME --html=FILENAME [--log-level=LEVEL]
+  email-update.py --db-creds-file=FILENAME --from=EMAIL --to=EMAIL [--cc=EMAIL] [--reply=EMAIL] --subject=SUBJECT --text=FILENAME --html=FILENAME [--log-level=LEVEL]
   email-update.py (-h | --help)
 
 Options:

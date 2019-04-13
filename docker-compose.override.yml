@@ -3,7 +3,7 @@ version: '3.2'
 services:
   update:
     command:
-      - "--db-creds-file=/run/secrets/db_creds.yml"
+      - "--db-creds-file=/run/secrets/scan_read_creds"
       - "--from=reports@cyber.dhs.gov"
       - "--to=jeremy.frasier@trio.dhs.gov"
       # - "--cc=ncats-dev@beta.dhs.gov"

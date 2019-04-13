@@ -21,11 +21,12 @@ Options:
 
 """
 
+import csv
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import gzip
-import json
+import io
 import logging
 
 import boto3
@@ -41,22 +42,23 @@ def query(db):
 
     Parameters
     ----------
-    db : mongokit.database.Database
+    db : pymongo.database.Database
          The Mongo database connection
 
     Returns
     -------
-    list: A list of dicts, each containing the pshtt scan results for
-    a single host that requires authentication via client
-    certificates.
+    pymongo.cursor.Cursor: Essentially a generator for a list of
+    dicts, each containing the pshtt scan results for a single host
+    that requires authentication via client certificates.  The results
+    are sorted by agency name.
 
     """
     client_cert_hosts = db.https_scan.find(
         {"latest": True, "live": True, "https_client_auth_required": True},
-        {"_id": False, "scan_date": False, "latest": False},
-    )
+        {"_id": False, "latest": False},
+    ).sort([("agency.name", 1)])
 
-    return list(client_cert_hosts)
+    return client_cert_hosts
 
 
 def main():
@@ -153,19 +155,91 @@ def main():
         logging.debug(f"Message HTML body is: {h}")
     msg.attach(body)
 
-    # Attach JSON file
-    json_part = MIMEApplication(
-        gzip.compress(
-            json.dumps(client_cert_hosts, sort_keys=True, indent=4).encode("utf-8")
-        ),
-        "json",
+    # Create CSV data from JSON data
+    csv_output = io.StringIO()
+    fieldnames = [
+        "Agency",
+        "Base Domain",
+        "Canonical URL",
+        "Defaults To HTTPS",
+        "Domain",
+        "Domain Enforces HTTPS",
+        "Domain Supports HTTPS",
+        "Domain Uses Strong HSTS",
+        "Downgrades HTTPS",
+        "HSTS",
+        "HSTS Base Domain Preloaded",
+        "HSTS Entire Domain",
+        "HSTS Header",
+        "HSTS Max Age",
+        "HSTS Preload Pending",
+        "HSTS Preload Ready",
+        "HSTS Preloaded",
+        "HTTPS Bad Chain",
+        "HTTPS Bad Hostname",
+        "HTTPS Client Auth Required",
+        "HTTPS Expired Cert",
+        "HTTPS Full Connection",
+        "HTTPS Live",
+        "HTTPS Self Signed Cert",
+        "Is Base Domain",
+        "Live",
+        "Redirect",
+        "Redirect To",
+        "Scan Date",
+        "Strictly Forces HTTPS",
+        "Unknown Error",
+        "Valid HTTPS",
+    ]
+    writer = csv.DictWriter(csv_output, fieldnames=fieldnames)
+    writer.writeheader()
+    for result in client_cert_hosts:
+        writer.writerow(
+            {
+                "Agency": result["agency"]["name"],
+                "Base Domain": result["base_domain"],
+                "Canonical URL": result["canonical_url"],
+                "Defaults To HTTPS": result["defaults_https"],
+                "Domain": result["domain"],
+                "Domain Enforces HTTPS": result["domain_enforces_https"],
+                "Domain Supports HTTPS": result["domain_supports_https"],
+                "Domain Uses Strong HSTS": result["domain_uses_strong_hsts"],
+                "Downgrades HTTPS": result["downgrades_https"],
+                "HSTS": result["hsts"],
+                "HSTS Base Domain Preloaded": result["hsts_base_domain_preloaded"],
+                "HSTS Entire Domain": result["hsts_entire_domain"],
+                "HSTS Header": result["hsts_header"],
+                "HSTS Max Age": result["hsts_max_age"],
+                "HSTS Preload Pending": result["hsts_preload_pending"],
+                "HSTS Preload Ready": result["hsts_preload_ready"],
+                "HSTS Preloaded": result["hsts_preloaded"],
+                "HTTPS Bad Chain": result["https_bad_chain"],
+                "HTTPS Bad Hostname": result["https_bad_hostname"],
+                "HTTPS Client Auth Required": result["https_client_auth_required"],
+                "HTTPS Expired Cert": result["https_expired_cert"],
+                "HTTPS Full Connection": result["https_full_connection"],
+                "HTTPS Live": result["https_live"],
+                "HTTPS Self Signed Cert": result["https_self_signed_cert"],
+                "Is Base Domain": result["is_base_domain"],
+                "Live": result["live"],
+                "Redirect": result["redirect"],
+                "Redirect To": result["redirect_to"],
+                "Scan Date": result["scan_date"].isoformat(),
+                "Strictly Forces HTTPS": result["strictly_forces_https"],
+                "Unknown Error": result["unknown_error"],
+                "Valid HTTPS": result["valid_https"],
+            }
+        )
+
+    # Attach (gzipped) CSV data
+    csv_part = MIMEApplication(
+        gzip.compress(csv_output.getvalue().encode("utf-8")), "gzip"
     )
-    json_part.add_header("Content-Encoding", "gzip")
-    json_filename = "hosts_that_require_auth_via_client_certs.json.gz"
+    csv_filename = "hosts_that_require_auth_via_client_certs.csv.gz"
     # See https://en.wikipedia.org/wiki/MIME#Content-Disposition
-    json_part.add_header("Content-Disposition", "attachment", filename=json_filename)
-    logging.debug(f"Message will include file {json_filename} as attachment")
-    msg.attach(json_part)
+    csv_part.add_header("Content-Disposition", "attachment", filename=csv_filename)
+    logging.debug(f"Message will include file {csv_filename} as attachment")
+    msg.attach(csv_part)
 
     # Send the email
     ses_client = boto3.client("ses")

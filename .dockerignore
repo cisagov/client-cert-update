@@ -7,7 +7,7 @@ version.txt
 *.md
 
 # Docker
-docker-compose.yml
+docker-compose.*.yml
 Dockerfile
 
 # Linters

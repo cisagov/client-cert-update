@@ -5,8 +5,8 @@ services:
     command:
       - "--db-creds-file=/run/secrets/scan_read_creds.yml"
       - "--from=reports@cyber.dhs.gov"
-      - "--to=jeremy.frasier@trio.dhs.gov"
-      # - "--cc=ncats-dev@beta.dhs.gov"
+      - "--to=fnr.bod@hq.dhs.gov"
+      - "--cc=ncats-dev@beta.dhs.gov,ncats@hq.dhs.gov"
       - "--reply=ncats-dev@beta.dhs.gov"
       - >-
         --subject="Latest list of web hosts that require authentication

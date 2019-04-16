@@ -1,5 +1,10 @@
 Hello,
 
-Please find attached an updated JSON file listing the BOD 18-01 web hosts that require authentication via client certs.
+Please find attached an updated CSV file listing the BOD 18-01 web hosts that require authentication via client certificates.
 
-Thank you
+Thank you,
+The NCATS team
+
+National Cybersecurity Assessments and Technical Services (NCATS)
+Cybersecurity and Infrastructure Security Agency (CISA)
+ncats@hq.dhs.gov

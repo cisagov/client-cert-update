@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-"""email-update.py is a tool for sending an updated list of HTTP sites
-requiring authentication via client certificates
+"""email-update.py sends a list of HTTP sites requiring client certs.
 
 Usage:
   email-update.py --db-creds-file=FILENAME --from=EMAIL --to=EMAIL [--cc=EMAIL] [--reply=EMAIL] --subject=SUBJECT --text=FILENAME --html=FILENAME [--log-level=LEVEL]
@@ -37,8 +36,7 @@ import yaml
 
 
 def query(db):
-    """Query the BOD 18-01 scan results database for hosts that require
-    authentication via client certificates
+    """Query the database for hosts that require client certificates.
 
     Parameters
     ----------
@@ -62,6 +60,7 @@ def query(db):
 
 
 def main():
+    """Compile the list and send it out."""
     # Parse command line arguments
     args = docopt.docopt(__doc__)
 

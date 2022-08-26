@@ -19,9 +19,9 @@ RUN groupadd --system --gid ${CISA_GID} ${CISA_GROUP}
 RUN useradd --system --uid ${CISA_UID} --gid ${CISA_GROUP} --comment "${CISA_USER} user" ${CISA_USER}
 
 ##
-# Make sure pip and setuptools are the latest versions
+# Make sure pip, setuptools, and wheel are the latest versions
 ##
-RUN pip install --no-cache-dir --upgrade pip setuptools
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 ##
 # Install client-cert-update python requirements

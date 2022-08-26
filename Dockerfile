@@ -21,13 +21,13 @@ RUN useradd --system --uid ${CISA_UID} --gid ${CISA_GROUP} --comment "${CISA_USE
 ##
 # Make sure pip and setuptools are the latest versions
 ##
-RUN pip install --upgrade pip setuptools
+RUN pip install --no-cache-dir --upgrade pip setuptools
 
 ##
 # Install client-cert-update python requirements
 ##
 COPY src/requirements.txt /tmp
-RUN pip install --requirement /tmp/requirements.txt
+RUN pip install --no-cache-dir --requirement /tmp/requirements.txt
 
 # Clean up aptitude cruft
 RUN apt-get clean && rm --recursive --force /var/lib/apt/lists/*

@@ -29,9 +29,6 @@ RUN pip install --no-cache-dir --upgrade pip setuptools
 COPY src/requirements.txt /tmp
 RUN pip install --no-cache-dir --requirement /tmp/requirements.txt
 
-# Clean up aptitude cruft
-RUN apt-get clean && rm --recursive --force /var/lib/apt/lists/*
-
 # Put this just before we change users because the copy (and every
 # step after it) will often be rerun by docker, but we need to be root
 # for the chown command.

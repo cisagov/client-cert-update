@@ -27,16 +27,16 @@ RUN pip install --upgrade pip setuptools
 # Install client-cert-update python requirements
 ##
 COPY src/requirements.txt /tmp
-RUN pip install -r /tmp/requirements.txt
+RUN pip install --requirement /tmp/requirements.txt
 
 # Clean up aptitude cruft
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && rm --recursive --force /var/lib/apt/lists/*
 
 # Put this just before we change users because the copy (and every
 # step after it) will often be rerun by docker, but we need to be root
 # for the chown command.
 COPY src/email-update.py src/body.txt src/body.html $CISA_HOME/
-RUN chown -R ${CISA_USER}:${CISA_USER} $CISA_HOME
+RUN chown --recursive ${CISA_USER}:${CISA_USER} $CISA_HOME
 
 ###
 # Prepare to Run

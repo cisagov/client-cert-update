@@ -1,4 +1,4 @@
-FROM python:3.7.3-slim-stretch
+FROM python:3.10.7-slim-bullseye
 
 # For a list of pre-defined annotation keys and value types see:
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md

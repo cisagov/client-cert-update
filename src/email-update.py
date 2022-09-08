@@ -20,6 +20,7 @@ Options:
 
 """
 
+# Standard Python Libraries
 import csv
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -28,6 +29,7 @@ import gzip
 import io
 import logging
 
+# Third-Party Libraries
 import boto3
 import docopt
 from mongo_db_from_config import db_from_config

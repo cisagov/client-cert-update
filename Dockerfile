@@ -37,6 +37,6 @@ COPY --chown=${CISA_USER}:${CISA_GROUP} src/email-update.py src/body.txt src/bod
 ###
 # Prepare to Run
 ###
-# USER $USER
 WORKDIR $CISA_HOME
+USER $CISA_USER
 ENTRYPOINT ["python3", "email-update.py"]

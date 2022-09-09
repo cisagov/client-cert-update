@@ -18,14 +18,14 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
   && adduser --system --uid ${CISA_UID} --ingroup ${CISA_GROUP} ${CISA_USER}
 
 # Install core Python packages
-RUN pip install --no-cache-dir --upgrade \
+RUN python3 -m pip install --no-cache-dir --upgrade \
   pip==22.2.2  \
   setuptools==65.3.0 \
   wheel==0.37.1
 
 # Install client-cert-update Python requirements
 COPY src/requirements.txt /tmp
-RUN pip install --no-cache-dir --requirement /tmp/requirements.txt
+RUN python3 -m pip install --no-cache-dir --requirement /tmp/requirements.txt
 
 # Put this just before we change users because the copy (and every
 # step after it) will often be rerun by Docker.

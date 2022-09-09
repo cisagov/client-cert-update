@@ -21,7 +21,10 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
 ##
 # Make sure pip, setuptools, and wheel are the latest versions
 ##
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+RUN pip install --no-cache-dir --upgrade \
+  pip==22.2.2  \
+  setuptools==65.3.0 \
+  wheel==0.37.1
 
 ##
 # Install client-cert-update python requirements

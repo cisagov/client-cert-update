@@ -40,4 +40,4 @@ RUN chown --recursive ${CISA_USER}:${CISA_USER} $CISA_HOME
 ###
 # USER $USER
 WORKDIR $CISA_HOME
-ENTRYPOINT ["./email-update.py"]
+ENTRYPOINT ["python3", "email-update.py"]

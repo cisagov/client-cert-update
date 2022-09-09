@@ -15,8 +15,8 @@ ENV CISA_HOME="/home/cisa"
 ###
 # Create unprivileged user
 ###
-RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP}
-RUN adduser --system --uid ${CISA_UID} --ingroup ${CISA_GROUP} ${CISA_USER}
+RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
+  && adduser --system --uid ${CISA_UID} --ingroup ${CISA_GROUP} ${CISA_USER}
 
 ##
 # Make sure pip, setuptools, and wheel are the latest versions

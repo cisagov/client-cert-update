@@ -47,13 +47,13 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
 
 # Copy in the Python virtual environment we created in the compile stage
 COPY --from=compile-stage --chown=${CISA_USER}:${CISA_GROUP} ${VIRTUAL_ENV} ${VIRTUAL_ENV}
-ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 # Put this just before we change users because the copy (and every
 # step after it) will often be rerun by Docker.
-COPY --chown=${CISA_USER}:${CISA_GROUP} src/email-update.py src/body.txt src/body.html $CISA_HOME/
+COPY --chown=${CISA_USER}:${CISA_GROUP} src/email-update.py src/body.txt src/body.html ${CISA_HOME}/
 
 # Prepare to run
-WORKDIR $CISA_HOME
-USER $CISA_USER
+WORKDIR ${CISA_HOME}
+USER ${CISA_USER}
 ENTRYPOINT ["python3", "email-update.py"]

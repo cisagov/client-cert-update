@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """email-update.py sends a list of HTTP sites requiring client certs.
 
 Usage:

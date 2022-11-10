@@ -34,7 +34,7 @@ RUN pipenv sync --clear --verbose
 FROM python:3.10.7-alpine3.16 as build-stage
 
 # Unprivileged user information
-ARG CISA_UID=421
+ARG CISA_UID=2048
 ENV CISA_GID=${CISA_UID}
 ARG CISA_USER="cisa"
 ENV CISA_GROUP=${CISA_USER}

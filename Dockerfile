@@ -1,4 +1,4 @@
-FROM python:3.10.7-alpine3.16 as compile-stage
+FROM python:3.10.8-alpine3.16 as compile-stage
 
 ###
 # For a list of pre-defined annotation keys and value types see:
@@ -20,14 +20,14 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 # Python virtual environment. This is done separately from the virtual
 # environment so that pipenv and its dependencies are not installed in the
 # Python virtual environment used in the final image.
-RUN python3 -m pip install --no-cache-dir --upgrade pipenv==2022.9.8 \
+RUN python3 -m pip install --no-cache-dir --upgrade pipenv==2022.11.25  \
   # Manually create Python virtual environment for the final image
   && python3 -m venv ${VIRTUAL_ENV} \
   # Ensure the core Python packages are installed in the virtual environment
   && ${VIRTUAL_ENV}/bin/python3 -m pip install --no-cache-dir --upgrade \
-    pip==22.2.2 \
-    setuptools==65.3.0 \
-    wheel==0.37.1
+    pip==22.3.1 \
+    setuptools==65.6.3 \
+    wheel==0.38.4
 
 # Install client-cert-update Python requirements
 WORKDIR /tmp
@@ -36,7 +36,7 @@ COPY src/Pipfile src/Pipfile.lock ./
 # VIRTUAL_ENV environment variable if it is set.
 RUN pipenv sync --clear --verbose
 
-FROM python:3.10.7-alpine3.16 as build-stage
+FROM python:3.10.8-alpine3.16 as build-stage
 
 ###
 # Unprivileged user setup variables

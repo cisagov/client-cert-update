@@ -16,11 +16,20 @@ ARG CISA_USER="cisa"
 ENV CISA_HOME="/home/${CISA_USER}"
 ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 
-# Install pipenv to manage installing the Python dependencies into a created
-# Python virtual environment. This is done separately from the virtual
-# environment so that pipenv and its dependencies are not installed in the
-# Python virtual environment used in the final image.
-RUN python3 -m pip install --no-cache-dir --upgrade pipenv==2022.11.25  \
+# Install base Python requirements and then install pipenv to manage installing
+# the Python dependencies into a created Python virtual environment. This is
+# done separately from the virtual environment so that pipenv and its
+# dependencies are not installed in the Python virtual environment used in the
+# final image.
+#
+# Please note that we only install the base Python requirements (pip,
+# setuptools, and wheel) pre-venv because this Docker image is using Python
+# built from source and not a system Python package.
+RUN python3 -m pip install --no-cache-dir --upgrade \
+    pip==22.3.1 \
+    setuptools==65.6.3 \
+    wheel==0.38.4 \
+  && python3 -m pip install --no-cache-dir --upgrade pipenv==2022.11.25 \
   # Manually create Python virtual environment for the final image
   && python3 -m venv ${VIRTUAL_ENV} \
   # Ensure the core Python packages are installed in the virtual environment

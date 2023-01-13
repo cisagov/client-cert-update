@@ -65,8 +65,9 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
   && adduser --system --uid ${CISA_UID} --ingroup ${CISA_GROUP} ${CISA_USER}
 
 # Copy in the Python virtual environment we created in the compile stage and
-# ensure the unprivileged user owns all of the files contained within the venv.
+# ensure the unprivileged user owns the files.
 COPY --from=compile-stage --chown=${CISA_USER}:${CISA_GROUP} ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+# Update the PATH so that the virtual environment has priority.
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 # Copy in the core logic for the Docker image and ensure the unprivileged user

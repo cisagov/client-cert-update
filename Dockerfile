@@ -64,11 +64,13 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
   && adduser --system --uid ${CISA_UID} --ingroup ${CISA_GROUP} ${CISA_USER}
 
-# Copy in the Python virtual environment we created in the compile stage
+# Copy in the Python virtual environment we created in the compile stage and
+# ensure the unprivileged user owns all of the files contained within the venv.
 COPY --from=compile-stage --chown=${CISA_USER}:${CISA_GROUP} ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-# Put this just before we change users because the copy (and every
+# Copy in the core logic for the Docker image and ensure the unprivileged user
+# owns the files. We put this just before we change users because the copy (and every
 # step after it) will often be rerun by Docker.
 COPY --chown=${CISA_USER}:${CISA_GROUP} src/email-update.py src/body.txt src/body.html ${CISA_HOME}/
 

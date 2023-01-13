@@ -50,7 +50,7 @@ FROM python:3.11.1-alpine3.17 as build-stage
 ###
 # Unprivileged user setup variables
 ###
-ARG CISA_UID=2048
+ARG CISA_UID=1005
 ARG CISA_GID=${CISA_UID}
 ARG CISA_USER="cisa"
 ENV CISA_GROUP=${CISA_USER}

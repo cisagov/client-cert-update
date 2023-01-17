@@ -29,7 +29,8 @@ RUN python3 -m pip install --no-cache-dir --upgrade \
     pip==22.3.1 \
     setuptools==65.7.0 \
     wheel==0.38.4 \
-  && python3 -m pip install --no-cache-dir --upgrade pipenv==2022.12.19 \
+  && python3 -m pip install --no-cache-dir --upgrade \
+    pipenv==2022.12.19 \
   # Manually create Python virtual environment for the final image
   && python3 -m venv ${VIRTUAL_ENV} \
   # Ensure the core Python packages are installed in the virtual environment
@@ -63,11 +64,14 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
   && adduser --system --uid ${CISA_UID} --ingroup ${CISA_GROUP} ${CISA_USER}
 
-# Copy in the Python virtual environment we created in the compile stage
+# Copy in the Python virtual environment we created in the compile stage and
+# ensure the unprivileged user owns the files.
 COPY --from=compile-stage --chown=${CISA_USER}:${CISA_GROUP} ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+# Update the PATH so that the virtual environment has priority.
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-# Put this just before we change users because the copy (and every
+# Copy in the core logic for the Docker image and ensure the unprivileged user
+# owns the files. We put this just before we change users because the copy (and every
 # step after it) will often be rerun by Docker.
 COPY --chown=${CISA_USER}:${CISA_GROUP} src/email-update.py src/body.txt src/body.html ${CISA_HOME}/
 

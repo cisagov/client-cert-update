@@ -26,17 +26,17 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 # setuptools, and wheel) pre-venv because this Docker image is using Python
 # built from source and not a system Python package.
 RUN python3 -m pip install --no-cache-dir --upgrade \
-    pip==22.3.1 \
-    setuptools==65.7.0 \
+    pip==23.0 \
+    setuptools==67.3.1 \
     wheel==0.38.4 \
   && python3 -m pip install --no-cache-dir --upgrade \
-    pipenv==2022.12.19 \
+    pipenv==2023.2.4 \
   # Manually create Python virtual environment for the final image
   && python3 -m venv ${VIRTUAL_ENV} \
   # Ensure the core Python packages are installed in the virtual environment
   && ${VIRTUAL_ENV}/bin/python3 -m pip install --no-cache-dir --upgrade \
-    pip==22.3.1 \
-    setuptools==65.7.0 \
+    pip==23.0 \
+    setuptools==67.3.1 \
     wheel==0.38.4
 
 # Install client-cert-update Python requirements

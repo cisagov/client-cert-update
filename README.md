@@ -135,7 +135,7 @@ tag (e.g. `:0.1.0-rc.1`).
 | Image:tag | Description |
 |-----------|-------------|
 |`cisagov/client-cert-update:0.1.0-rc.1`| An exact release version. |
-|`cisagov/client-cert-update:0.0`| The most recent release matching the major and minor version numbers. |
+|`cisagov/client-cert-update:0.1`| The most recent release matching the major and minor version numbers. |
 |`cisagov/client-cert-update:0`| The most recent release matching the major version number. |
 |`cisagov/client-cert-update:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
 |`cisagov/client-cert-update:nightly` | A nightly build of the `develop` branch of this repository. |

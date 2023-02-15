@@ -1,11 +1,11 @@
 {
   "_meta": {
     "hash": {
-      "sha256": "e6df03de8bcfb3076359431739c12f892df30c99b7f918ddca24c80db60847ad"
+      "sha256": "cb8e9066bc4b33bc4576334ae67dc503d7c2694a75ff3e1de66693d390af2ab8"
     },
     "pipfile-spec": 6,
     "requires": {
-      "python_full_version": "3.11.1"
+      "python_full_version": "3.11.2"
     },
     "sources": [
       {
@@ -18,27 +18,27 @@
   "default": {
     "boto3": {
       "hashes": [
-        "sha256:8aa3fd453a815240b85c01190ed0d9924622a1a061c93423b1443379eadd3c43",
-        "sha256:a23fe87e9bafca736620dd9d7e5977eeaaa27c3abf5800f7d8b7b7d08b4ad736"
+        "sha256:5a9d19cdd8dcec679c483408f208027e01ab2087cbc66787790036087b6737de",
+        "sha256:6c4845243d1896019646d649f1f0ff4042cedcc5db3ecfba3dc2d611ea11cd08"
       ],
       "index": "pypi",
-      "version": "==1.26.48"
+      "version": "==1.26.71"
     },
     "botocore": {
       "hashes": [
-        "sha256:17eeb963b3ae4a3ea4a972bdf78c9925c3efd9e2232875bfc19043640d3dac14",
-        "sha256:c5f57c1f694e67c29c870426c0a7ebffce90099e794025e3d283db7f1ad7a65b"
+        "sha256:40406466f5c416b1f54bfbfc11aef90d783103f7ea77a1992dcaf1768ab04e12",
+        "sha256:783e7fa97bb5bf3759e4b333b8da2bcaffdb54828ea1d759b55329cc39003b98"
       ],
       "markers": "python_version >= '3.7'",
-      "version": "==1.29.48"
+      "version": "==1.29.71"
     },
     "dnspython": {
       "hashes": [
-        "sha256:0f7569a4a6ff151958b64304071d370daa3243d15941a7beedf0c9fe5105603e",
-        "sha256:a851e51367fb93e9e1361732c1d60dab63eff98712e503ea7d92e6eccb109b4f"
+        "sha256:224e32b03eb46be70e12ef6d64e0be123a64e621ab4c0822ff6d450d52a540b9",
+        "sha256:89141536394f909066cabd112e3e1a37e4e654db00a25308b0f130bc3152eb46"
       ],
-      "markers": "python_version >= '3.6' and python_version < '4.0'",
-      "version": "==2.2.1"
+      "markers": "python_version >= '3.7' and python_version < '4.0'",
+      "version": "==2.3.0"
     },
     "docopt": {
       "hashes": [
@@ -56,12 +56,11 @@
       "version": "==1.0.1"
     },
     "mongo-db-from-config": {
-      "file": "https://github.com/cisagov/mongo-db-from-config/archive/v0.1.0.tar.gz",
+      "file": "https://github.com/cisagov/mongo-db-from-config/archive/v0.2.0.tar.gz",
       "hashes": [
-        "sha256:0655651e5945e327e2b6baf17aafe6c603635278f8ac3c208c51f7a0360ab44c",
-        "sha256:f42787f5aba88ac63b20b70439a6fa09d60daeff9169991d340b49b4d777ce16"
+        "sha256:51a633ea17cc1e9042fb908b0ea65cac75b188b1c750bf8a5dc0dc355d285892"
       ],
-      "version": "==0.1.0"
+      "version": "==0.2.0"
     },
     "pymongo": {
       "hashes": [
@@ -207,11 +206,11 @@
     },
     "setuptools": {
       "hashes": [
-        "sha256:4d3c92fac8f1118bb77a22181355e29c239cabfe2b9effdaa665c66b711136d7",
-        "sha256:8ab4f1dbf2b4a65f7eec5ad0c620e84c34111a68d3349833494b9088212214dd"
+        "sha256:23c86b4e44432bfd8899384afc08872ec166a24f48a3f99f293b0a557e6a6b5d",
+        "sha256:daec07fd848d80676694d6bf69c009d28910aeece68a38dbe88b7e1bb6dba12e"
       ],
       "markers": "python_version >= '3.7'",
-      "version": "==65.7.0"
+      "version": "==67.3.1"
     },
     "six": {
       "hashes": [

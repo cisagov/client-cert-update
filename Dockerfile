@@ -16,6 +16,13 @@ ARG CISA_USER="cisa"
 ENV CISA_HOME="/home/${CISA_USER}"
 ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 
+
+# Versions of the Python packages installed directly
+ENV PYTHON_PIP_VERSION=23.0
+ENV PYTHON_SETUPTOOLS_VERSION=67.3.1
+ENV PYTHON_WHEEL_VERSION=0.38.4
+ENV PYTHON_PIPENV_VERSION=2023.2.4
+
 # Install base Python requirements and then install pipenv to manage installing
 # the Python dependencies into a created Python virtual environment. This is
 # done separately from the virtual environment so that pipenv and its
@@ -26,18 +33,18 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 # setuptools, and wheel) pre-venv because this Docker image is using Python
 # built from source and not a system Python package.
 RUN python3 -m pip install --no-cache-dir --upgrade \
-    pip==23.0 \
-    setuptools==67.3.1 \
-    wheel==0.38.4 \
+    pip==${PYTHON_PIP_VERSION} \
+    setuptools==${PYTHON_SETUPTOOLS_VERSION} \
+    wheel==${PYTHON_WHEEL_VERSION} \
   && python3 -m pip install --no-cache-dir --upgrade \
-    pipenv==2023.2.4 \
+    pipenv==${PYTHON_PIPENV_VERSION} \
   # Manually create Python virtual environment for the final image
   && python3 -m venv ${VIRTUAL_ENV} \
   # Ensure the core Python packages are installed in the virtual environment
   && ${VIRTUAL_ENV}/bin/python3 -m pip install --no-cache-dir --upgrade \
-    pip==23.0 \
-    setuptools==67.3.1 \
-    wheel==0.38.4
+    pip==${PYTHON_PIP_VERSION} \
+    setuptools==${PYTHON_SETUPTOOLS_VERSION} \
+    wheel==${PYTHON_WHEEL_VERSION}
 
 # Install client-cert-update Python requirements
 WORKDIR /tmp

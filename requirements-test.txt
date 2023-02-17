@@ -1,2 +1,4 @@
--r requirements.txt
+--requirement requirements.txt
 pre-commit
+pytest
+pytest-dockerc

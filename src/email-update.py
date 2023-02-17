@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """email-update.py sends a list of HTTP sites requiring client certs.
 
 Usage:
@@ -20,6 +18,7 @@ Options:
 
 """
 
+# Standard Python Libraries
 import csv
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -28,6 +27,7 @@ import gzip
 import io
 import logging
 
+# Third-Party Libraries
 import boto3
 import docopt
 from mongo_db_from_config import db_from_config
@@ -141,11 +141,11 @@ def main():
 
     # Construct and attach the text body
     body = MIMEMultipart("alternative")
-    with open(text_filename, "r") as text:
+    with open(text_filename) as text:
         t = text.read()
         body.attach(MIMEText(t, "plain"))
         logging.debug(f"Message plain-text body is: {t}")
-    with open(html_filename, "r") as html:
+    with open(html_filename) as html:
         h = html.read()
         html_part = MIMEText(h, "html")
         # See https://en.wikipedia.org/wiki/MIME#Content-Disposition

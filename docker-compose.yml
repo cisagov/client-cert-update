@@ -1,19 +1,26 @@
-version: '3.2'
+---
+version: "3.7"
+
+# This Docker composition file is used to build and test the container
 
 secrets:
-  scan_read_creds:
-    file: secrets/scan_read_creds.yml
   aws_config:
-    file: secrets/aws_config
+    file: ./src/secrets/aws_config
+  scan_read_creds:
+    file: ./src/secrets/scan_read_creds.yml
 
 services:
   update:
-    image: 'dhsncats/client-cert-update:0.0.2'
-    secrets:
-      - source: scan_read_creds
-        target: scan_read_creds.yml
-      - source: aws_config
-        target: aws_config
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cisagov/client-cert-update
+    init: true
     environment:
       - AWS_CONFIG_FILE=/run/secrets/aws_config
       - AWS_PROFILE=default
+    secrets:
+      - source: aws_config
+        target: aws_config
+      - source: scan_read_creds
+        target: scan_read_creds.yml

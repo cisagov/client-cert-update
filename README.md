@@ -21,7 +21,7 @@ certificates.
 To run the `cisagov/client-cert-update` image via Docker:
 
 ```console
-docker run cisagov/client-cert-update:0.1.3
+docker run cisagov/client-cert-update:0.1.4
 ```
 
 ### Running with Docker Compose ###
@@ -34,7 +34,7 @@ docker run cisagov/client-cert-update:0.1.3
 
     services:
       update:
-        image: cisagov/client-cert-update:0.1.3
+        image: cisagov/client-cert-update:0.1.4
         init: true
         environment:
           - AWS_CONFIG_FILE=path/to/aws_config
@@ -82,7 +82,7 @@ environment variables.  See the
 
     services:
       update:
-        image: cisagov/client-cert-update:0.1.3
+        image: cisagov/client-cert-update:0.1.4
         init: true
         environment:
           - AWS_CONFIG_FILE=/run/secrets/aws_config
@@ -121,7 +121,7 @@ environment variables.  See the
 1. Pull the new image:
 
     ```console
-    docker pull cisagov/client-cert-update:0.1.3
+    docker pull cisagov/client-cert-update:0.1.4
     ```
 
 1. Recreate and run the container by following the [previous instructions](#running-with-docker).
@@ -130,11 +130,11 @@ environment variables.  See the
 
 The images of this container are tagged with [semantic
 versions](https://semver.org).  It is recommended that most users use a version
-tag (e.g. `:0.1.3`).
+tag (e.g. `:0.1.4`).
 
 | Image:tag | Description |
 |-----------|-------------|
-|`cisagov/client-cert-update:0.1.3`| An exact release version. |
+|`cisagov/client-cert-update:0.1.4`| An exact release version. |
 |`cisagov/client-cert-update:0.1`| The most recent release matching the major and minor version numbers. |
 |`cisagov/client-cert-update:0`| The most recent release matching the major version number. |
 |`cisagov/client-cert-update:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
@@ -196,7 +196,7 @@ Build the image locally using this git repository as the [build context](https:/
 
 ```console
 docker build \
-  --tag cisagov/client-cert-update:0.1.3 \
+  --tag cisagov/client-cert-update:0.1.4 \
   https://github.com/cisagov/client-cert-update.git#develop
 ```
 
@@ -227,7 +227,7 @@ Docker:
       --file Dockerfile-x \
       --platform linux/amd64 \
       --output type=docker \
-      --tag cisagov/client-cert-update:0.1.3 .
+      --tag cisagov/client-cert-update:0.1.4 .
     ```
 
 ## Contributing ##

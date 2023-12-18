@@ -1,4 +1,4 @@
-FROM python:3.12.0-alpine3.18 as compile-stage
+FROM python:3.12.1-alpine3.19 as compile-stage
 
 ###
 # For a list of pre-defined annotation keys and value types see:
@@ -53,7 +53,7 @@ COPY src/Pipfile src/Pipfile.lock ./
 # VIRTUAL_ENV environment variable if it is set.
 RUN pipenv sync --clear --verbose
 
-FROM python:3.12.0-alpine3.18 as build-stage
+FROM python:3.12.1-alpine3.19 as build-stage
 
 ###
 # Unprivileged user setup variables

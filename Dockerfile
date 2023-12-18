@@ -18,10 +18,10 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 
 
 # Versions of the Python packages installed directly
-ENV PYTHON_PIP_VERSION=23.3.1
-ENV PYTHON_PIPENV_VERSION=2023.10.24
-ENV PYTHON_SETUPTOOLS_VERSION=68.2.2
-ENV PYTHON_WHEEL_VERSION=0.41.2
+ENV PYTHON_PIP_VERSION=23.3.2
+ENV PYTHON_PIPENV_VERSION=2023.11.15
+ENV PYTHON_SETUPTOOLS_VERSION=69.0.2
+ENV PYTHON_WHEEL_VERSION=0.42.0
 
 # Install base Python requirements and then install pipenv to manage installing
 # the Python dependencies into a created Python virtual environment. This is

@@ -1,4 +1,4 @@
-FROM python:3.12.0-alpine3.18 as compile-stage
+FROM python:3.12.1-alpine3.19 as compile-stage
 
 ###
 # For a list of pre-defined annotation keys and value types see:
@@ -18,10 +18,10 @@ ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 
 
 # Versions of the Python packages installed directly
-ENV PYTHON_PIP_VERSION=23.3.1
-ENV PYTHON_PIPENV_VERSION=2023.10.24
-ENV PYTHON_SETUPTOOLS_VERSION=68.2.2
-ENV PYTHON_WHEEL_VERSION=0.41.2
+ENV PYTHON_PIP_VERSION=23.3.2
+ENV PYTHON_PIPENV_VERSION=2023.11.15
+ENV PYTHON_SETUPTOOLS_VERSION=69.0.2
+ENV PYTHON_WHEEL_VERSION=0.42.0
 
 # Install base Python requirements and then install pipenv to manage installing
 # the Python dependencies into a created Python virtual environment. This is
@@ -53,7 +53,7 @@ COPY src/Pipfile src/Pipfile.lock ./
 # VIRTUAL_ENV environment variable if it is set.
 RUN pipenv sync --clear --verbose
 
-FROM python:3.12.0-alpine3.18 as build-stage
+FROM python:3.12.1-alpine3.19 as build-stage
 
 ###
 # Unprivileged user setup variables
